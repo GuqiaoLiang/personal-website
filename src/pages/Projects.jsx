@@ -177,12 +177,15 @@ const Projects = () => {
                   <div className="flex justify-between items-center">
                     <a
                       href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-gray-600 hover:text-british-green transition-colors text-sm"
                     >
                       View Code
                     </a>
                     <a
-                      href={project.demo}
+                      href="#"
+                      onClick={handleUnderConstruction}
                       className="text-gray-600 hover:text-royal-blue transition-colors text-sm"
                     >
                       Live Demo

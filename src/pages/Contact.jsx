@@ -18,17 +18,12 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // EmailJS configuration
-    const serviceId = 'service_5i7j6qg' // You'll need to create this in EmailJS
-    const templateId = 'template_contact_form' // You'll need to create this in EmailJS
-    const publicKey = 'your_public_key' // You'll need to get this from EmailJS
-
     // For now, we'll show a success message and reset the form
-    // In production, you would integrate with EmailJS or another email service
+    // Since EmailJS requires account setup, we'll just log the data
     console.log('Form submitted:', formData)
 
     // Show success message
-    alert('Thank you for your message! I will get back to you soon.')
+    alert('Thank you for your message! I will get back to you soon. (Note: Email functionality requires backend setup - please email me directly at scygl3@nottingham.ac.uk)')
 
     // Reset form
     setFormData({
@@ -37,34 +32,6 @@ const Contact = () => {
       subject: '',
       message: ''
     })
-
-    // Note: To enable actual email sending, you would need to:
-    // 1. Create an account at https://www.emailjs.com/
-    // 2. Create an email service and template
-    // 3. Replace the serviceId, templateId, and publicKey above
-    // 4. Uncomment the following code:
-    /*
-    emailjs.send(serviceId, templateId, {
-      from_name: formData.name,
-      from_email: formData.email,
-      subject: formData.subject,
-      message: formData.message,
-      reply_to: formData.email
-    }, publicKey)
-    .then((result) => {
-      console.log('Email sent successfully:', result.text)
-      alert('Thank you for your message! I will get back to you soon.')
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      })
-    }, (error) => {
-      console.log('Email failed to send:', error.text)
-      alert('Sorry, there was an error sending your message. Please try again or email me directly at scygl3@nottingham.ac.uk')
-    })
-    */
   }
 
   return (

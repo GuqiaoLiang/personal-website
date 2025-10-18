@@ -1,40 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Projects = () => {
+  const [showUnderConstruction, setShowUnderConstruction] = useState(false)
+
+  const handleUnderConstruction = (e) => {
+    e.preventDefault()
+    setShowUnderConstruction(true)
+    setTimeout(() => setShowUnderConstruction(false), 3000)
+  }
+
   const projects = [
     {
-      title: '个人作品集网站',
-      description: '使用React和Tailwind CSS构建的现代化响应式个人网站，展示专业技能和项目作品。',
-      technologies: ['React', 'Tailwind CSS', 'JavaScript', 'Vite'],
-      image: '/src/assets/images/portfolio-preview.jpg',
-      github: '#',
+      title: 'LLM-based Spreadsheet Processing Agent',
+      description: 'Research project exploring the application of Large Language Models in spreadsheet handling and data processing.',
+      technologies: ['LLM', 'Research', 'Python', 'Data Analysis'],
+      image: '/src/assets/images/UniversityOfNottingham.jpg',
+      github: 'https://github.com/GuqiaoLiang',
       demo: '#',
       featured: true
     },
     {
-      title: '任务管理应用',
-      description: '全栈任务管理应用程序，具有用户认证、实时更新和拖拽功能。',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-      image: '/src/assets/images/task-manager-preview.jpg',
-      github: '#',
+      title: 'Build Your Own World - 2D Maze Game',
+      description: 'Java-based 2D maze game with saving/loading functionality and A* algorithm pathfinding implementation.',
+      technologies: ['Java', 'A* Algorithm', 'Game Development', 'Software Engineering'],
+      image: '/src/assets/images/goldengatebridge.jpg',
+      github: 'https://github.com/GuqiaoLiang',
       demo: '#',
       featured: true
     },
     {
-      title: '天气应用',
-      description: '基于API的天气应用，提供实时天气信息和未来预报，支持地理位置检测。',
-      technologies: ['JavaScript', 'API Integration', 'CSS3', 'HTML5'],
-      image: '/src/assets/images/weather-app-preview.jpg',
-      github: '#',
+      title: 'RISC-V CPU Design',
+      description: '2-stage pipelined CPU implementation using Logisim hardware simulator with smart branch prediction.',
+      technologies: ['RISC-V', 'Logisim', 'CPU Architecture', 'Hardware Design'],
+      image: '/src/assets/images/UniversityOfNottingham.jpg',
+      github: 'https://github.com/GuqiaoLiang',
       demo: '#',
       featured: false
     },
     {
-      title: '电商平台',
-      description: '完整的电商解决方案，包含商品展示、购物车、支付集成和用户管理功能。',
-      technologies: ['React', 'Redux', 'Stripe API', 'Firebase'],
-      image: '/src/assets/images/ecommerce-preview.jpg',
-      github: '#',
+      title: 'AI Techniques in 3D Model Generation',
+      description: 'Exploration of 3D generative models and creation of animated character simulation using Mixamao and Unity.',
+      technologies: ['3D Modeling', 'AI', 'Unity', 'Computer Graphics'],
+      image: '/src/assets/images/goldengatebridge.jpg',
+      github: 'https://github.com/GuqiaoLiang',
       demo: '#',
       featured: false
     }
@@ -43,6 +51,17 @@ const Projects = () => {
   return (
     <div className="section-padding">
       <div className="container-custom">
+        {/* Under Construction Alert */}
+        {showUnderConstruction && (
+          <div className="fixed top-4 right-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg z-50 animate-bounce">
+            <div className="flex items-center">
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              <span className="font-medium">Sorry, this website is under construction!</span>
+            </div>
+          </div>
+        )}
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-dark-gray mb-4">
@@ -91,6 +110,8 @@ const Projects = () => {
                     <div className="flex space-x-4">
                       <a
                         href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center text-gray-700 hover:text-british-green transition-colors"
                       >
                         <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -99,7 +120,8 @@ const Projects = () => {
                         View Code
                       </a>
                       <a
-                        href={project.demo}
+                        href="#"
+                        onClick={handleUnderConstruction}
                         className="flex items-center text-gray-700 hover:text-royal-blue transition-colors"
                       >
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

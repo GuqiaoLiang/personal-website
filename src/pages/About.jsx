@@ -18,14 +18,18 @@ const About = () => {
           {/* Profile Image and Info */}
           <div className="space-y-8">
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <div className="w-32 h-32 bg-gradient-to-br from-british-green to-royal-blue rounded-full mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold">
-                GL
+              <div className="w-48 h-48 bg-gradient-to-br from-british-green to-royal-blue rounded-full mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold overflow-hidden border-4 border-white shadow-lg">
+                <img
+                  src="/src/assets/images/selfie.jpg"
+                  alt="Guqiao Liang"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h2 className="text-2xl font-bold text-center text-dark-gray mb-4">
                 Guqiao Liang
               </h2>
               <p className="text-gray-600 text-center mb-6">
-                Full Stack Developer | Problem Solver
+                Computer Science Student | AI Enthusiast
               </p>
 
               <div className="space-y-4">
@@ -59,13 +63,18 @@ const About = () => {
                   <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                 </svg>
-                教育背景
+                Education
               </h3>
               <div className="space-y-4">
                 <div className="border-l-4 border-royal-blue pl-4">
-                  <h4 className="font-semibold text-dark-gray">英国诺丁汉大学</h4>
-                  <p className="text-gray-600">计算机科学学士</p>
-                  <p className="text-sm text-gray-500">2020 - 2024</p>
+                  <h4 className="font-semibold text-dark-gray">University of Nottingham, United Kingdom</h4>
+                  <p className="text-gray-600">One-year Exchange Program</p>
+                  <p className="text-sm text-gray-500">Sept 2025 - Jun 2026</p>
+                </div>
+                <div className="border-l-4 border-british-green pl-4">
+                  <h4 className="font-semibold text-dark-gray">University of Nottingham, Ningbo China</h4>
+                  <p className="text-gray-600">BS in Computer Science</p>
+                  <p className="text-sm text-gray-500">Sept 2023 - Jun 2027 | GPA: 4.0/4.0 (81/100)</p>
                 </div>
               </div>
             </div>
@@ -74,30 +83,30 @@ const About = () => {
           {/* About Text */}
           <div className="space-y-8">
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-bold text-dark-gray mb-6">个人简介</h3>
+              <h3 className="text-xl font-bold text-dark-gray mb-6">About Me</h3>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  我是一名对技术充满热情的计算机科学毕业生，毕业于英国诺丁汉大学。
-                  在学习期间，我深入研究了软件工程、人工智能和Web开发等领域。
+                  I am a passionate Computer Science student currently pursuing my studies at the University of Nottingham,
+                  with a strong focus on software engineering, artificial intelligence, and machine learning.
                 </p>
                 <p>
-                  我特别擅长使用现代技术栈构建响应式、用户友好的Web应用程序。
-                  我的技术栈包括React、JavaScript、TypeScript、Node.js和Python等。
+                  My academic journey has equipped me with solid foundations in various programming languages including
+                  Java, Python, C++, and C, as well as experience with hardware design through RISC-V and MIPS architectures.
                 </p>
                 <p>
-                  除了技术技能，我还注重代码质量、用户体验和团队协作。
-                  我相信好的软件不仅仅是功能的实现，更是优雅的解决方案。
+                  I'm particularly interested in the intersection of AI and practical applications, having worked on
+                  projects involving LLM-based spreadsheet processing, 3D model generation, and computer vision applications.
                 </p>
               </div>
             </div>
 
             {/* Interests */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-bold text-dark-gray mb-6">兴趣爱好</h3>
+              <h3 className="text-xl font-bold text-dark-gray mb-6">Interests</h3>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  '编程', '摄影', '旅行', '阅读',
-                  '音乐', '运动', '烹饪', '学习新技术'
+                  'Programming', 'Machine Learning', 'Debate', 'Reading',
+                  'Technology', 'Education', 'Research', 'Innovation'
                 ].map((interest) => (
                   <div
                     key={interest}

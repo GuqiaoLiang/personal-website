@@ -17,15 +17,54 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle form submission here
+
+    // EmailJS configuration
+    const serviceId = 'service_5i7j6qg' // You'll need to create this in EmailJS
+    const templateId = 'template_contact_form' // You'll need to create this in EmailJS
+    const publicKey = 'your_public_key' // You'll need to get this from EmailJS
+
+    // For now, we'll show a success message and reset the form
+    // In production, you would integrate with EmailJS or another email service
     console.log('Form submitted:', formData)
+
+    // Show success message
     alert('Thank you for your message! I will get back to you soon.')
+
+    // Reset form
     setFormData({
       name: '',
       email: '',
       subject: '',
       message: ''
     })
+
+    // Note: To enable actual email sending, you would need to:
+    // 1. Create an account at https://www.emailjs.com/
+    // 2. Create an email service and template
+    // 3. Replace the serviceId, templateId, and publicKey above
+    // 4. Uncomment the following code:
+    /*
+    emailjs.send(serviceId, templateId, {
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      reply_to: formData.email
+    }, publicKey)
+    .then((result) => {
+      console.log('Email sent successfully:', result.text)
+      alert('Thank you for your message! I will get back to you soon.')
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      })
+    }, (error) => {
+      console.log('Email failed to send:', error.text)
+      alert('Sorry, there was an error sending your message. Please try again or email me directly at scygl3@nottingham.ac.uk')
+    })
+    */
   }
 
   return (
@@ -55,7 +94,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-dark-gray">Email</h3>
-                    <p className="text-gray-600">your.email@example.com</p>
+                    <p className="text-gray-600">scygl3@nottingham.ac.uk</p>
                   </div>
                 </div>
 
@@ -80,7 +119,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-dark-gray">Phone</h3>
-                    <p className="text-gray-600">+44 (0) 1234 567890</p>
+                    <p className="text-gray-600">+44 7379540426</p>
                   </div>
                 </div>
               </div>
@@ -91,7 +130,9 @@ const Contact = () => {
               <h2 className="text-2xl font-bold text-dark-gray mb-6">Follow Me</h2>
               <div className="flex space-x-4">
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/GuqiaoLiang/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-british-green hover:text-white transition-colors"
                   aria-label="LinkedIn"
                 >
@@ -100,7 +141,9 @@ const Contact = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  href="https://github.com/GuqiaoLiang"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-800 hover:text-white transition-colors"
                   aria-label="GitHub"
                 >

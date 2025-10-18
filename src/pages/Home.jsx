@@ -5,14 +5,24 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-british-green/10 to-royal-blue/10">
-        <div className="container-custom text-center">
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-british-green/10 to-royal-blue/10 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/src/assets/images/UniversityOfNottingham.jpg"
+            alt="University of Nottingham"
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-british-green/30 to-royal-blue/30"></div>
+        </div>
+
+        <div className="container-custom text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold text-dark-gray mb-6">
               Hello, I'm <span className="text-british-green">Guqiao Liang</span>
             </h1>
             <p className="text-xl md:text-2xl text-dark-gray mb-8 leading-relaxed">
-              A passionate developer dedicated to creating elegant digital solutions
+              Computer Science Student at University of Nottingham | Passionate about AI and Software Engineering
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/about" className="btn-primary">
@@ -83,8 +93,8 @@ const Home = () => {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              'React', 'JavaScript', 'TypeScript', 'Node.js',
-              'Python', 'HTML/CSS', 'Git', 'UI/UX'
+              'Java', 'Python', 'C++', 'C',
+              'Matlab', 'SQL', 'RISC-V', 'MIPS'
             ].map((skill) => (
               <div
                 key={skill}

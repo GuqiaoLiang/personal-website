@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
+  const { language, toggleLanguage } = useLanguage()
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Resume', href: '/resume' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '/contact' },
+    { name: language === 'en' ? 'Home' : '首页', href: '/' },
+    { name: language === 'en' ? 'About' : '关于', href: '/about' },
+    { name: language === 'en' ? 'Resume' : '简历', href: '/resume' },
+    { name: language === 'en' ? 'Projects' : '项目', href: '/projects' },
+    { name: language === 'en' ? 'Contact' : '联系', href: '/contact' },
   ]
 
   const isActive = (path) => location.pathname === path
@@ -24,11 +26,11 @@ const Header = () => {
             to="/"
             className="text-2xl font-bold text-british-green hover:text-royal-blue transition-colors"
           >
-            Guqiao Liang
+            Guqiao Liang (梁谷乔)
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-8 items-center">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -42,6 +44,13 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center space-x-1 px-3 py-1 border border-british-green rounded-full text-british-green hover:bg-british-green hover:text-white transition-colors duration-300"
+            >
+              <span className="text-sm font-medium">{language === 'en' ? '中文' : 'EN'}</span>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -79,6 +88,16 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              {/* Mobile Language Toggle */}
+              <button
+                onClick={() => {
+                  toggleLanguage()
+                  setIsMenuOpen(false)
+                }}
+                className="flex items-center space-x-1 px-3 py-2 border border-british-green rounded-full text-british-green hover:bg-british-green hover:text-white transition-colors duration-300 w-fit"
+              >
+                <span className="text-sm font-medium">{language === 'en' ? '中文' : 'EN'}</span>
+              </button>
             </div>
           </div>
         )}

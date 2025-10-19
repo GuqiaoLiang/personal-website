@@ -1,12 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import emailjs from '@emailjs/browser'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../data/translations'
+import { wechatQRCode } from '../assets/images'
 
 const Contact = () => {
+  const { language } = useLanguage()
+  const t = translations[language]
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // EmailJS configuration
+  const EMAILJS_CONFIG = {
+    serviceId: 'service_8ox32pu',
+    templateId: 'template_k9q3pow',
+    publicKey: 'RIx4vHZUL4UQH7gwR'
+  }
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(EMAILJS_CONFIG.publicKey)
+  }, [])
 
   const handleChange = (e) => {
     setFormData({
@@ -15,23 +34,48 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
 
-    // For now, we'll show a success message and reset the form
-    // Since EmailJS requires account setup, we'll just log the data
-    console.log('Form submitted:', formData)
+    try {
+      // EmailJS template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'scygl3@nottingham.ac.uk'
+      }
 
-    // Show success message
-    alert('Thank you for your message! I will get back to you soon. (Note: Email functionality requires backend setup - please email me directly at scygl3@nottingham.ac.uk)')
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        templateParams
+      )
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    })
+      console.log('Email sent successfully:', result)
+
+      // Show success message
+      alert('Thank you for your message! I will get back to you soon.')
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      })
+
+    } catch (error) {
+      console.error('Failed to send email:', error)
+
+      // Fallback: Show alert with manual email option
+      alert(`Sorry, there was an issue sending your message. Please email me directly at scygl3@nottingham.ac.uk with the following details:\n\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}`)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -40,10 +84,10 @@ const Contact = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-dark-gray mb-4">
-            Contact Me
+            {t.getInTouch}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Let's work together! Feel free to reach out for any questions or opportunities.
+            {language === 'en' ? "Let's work together! Feel free to reach out for any questions or opportunities." : "让我们合作吧！欢迎随时联系我，有任何问题或机会都可以。"}
           </p>
         </div>
 
@@ -51,7 +95,7 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-dark-gray mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold text-dark-gray mb-6">{t.contactInfo}</h2>
               <div className="space-y-6">
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-british-green/10 rounded-full flex items-center justify-center mr-4">
@@ -94,7 +138,7 @@ const Contact = () => {
 
             {/* Social Links */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-dark-gray mb-6">Follow Me</h2>
+              <h2 className="text-2xl font-bold text-dark-gray mb-6">{t.connectWithMe}</h2>
               <div className="flex space-x-4">
                 <a
                   href="https://www.linkedin.com/in/GuqiaoLiang/"
@@ -120,25 +164,45 @@ const Contact = () => {
                 </a>
                 <a
                   href="#"
-                  className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors"
-                  aria-label="Twitter"
+                  className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-green-500 hover:text-white transition-colors"
+                  aria-label="WeChat"
                 >
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    <path d="M8.691 2.188C3.891 2.188 0 5.418 0 9.355c0 2.105 1.175 4.02 3.072 5.293a.673.673 0 0 1 .227.926l-.455.787a.673.673 0 0 0 .926.927l1.203-.694a.673.673 0 0 1 .642 0 8.537 8.537 0 0 0 2.876.492c4.8 0 8.691-3.23 8.691-7.167s-3.891-7.167-8.691-7.167zm-2.99 5.04a1.01 1.01 0 1 1 0-2.02 1.01 1.01 0 0 1 0 2.02zm5.98 0a1.01 1.01 0 1 1 0-2.02 1.01 1.01 0 0 1 0 2.02z"/>
+                    <path d="M15.309 13.812c-4.8 0-8.691 3.23-8.691 7.167 0 2.105 1.175 4.02 3.072 5.293a.673.673 0 0 1 .227.926l-.455.787a.673.673 0 0 0 .926.927l1.203-.694a.673.673 0 0 1 .642 0 8.537 8.537 0 0 0 2.876.492c4.8 0 8.691-3.23 8.691-7.167s-3.891-7.167-8.691-7.167zm-2.99 5.04a1.01 1.01 0 1 1 0-2.02 1.01 1.01 0 0 1 0 2.02zm5.98 0a1.01 1.01 0 1 1 0-2.02 1.01 1.01 0 0 1 0 2.02z"/>
                   </svg>
                 </a>
+              </div>
+
+              {/* WeChat QR Code */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <h3 className="text-lg font-semibold text-dark-gray mb-4 text-center">
+                  {language === 'en' ? 'WeChat Publication Account' : '微信公众号'}
+                </h3>
+                <div className="flex justify-center">
+                  <div className="bg-white p-4 rounded-lg shadow-md">
+                    <img
+                      src={wechatQRCode}
+                      alt={language === 'en' ? 'WeChat Publication Account QR Code' : '微信公众号二维码'}
+                      className="w-48 h-48 object-cover rounded"
+                    />
+                    <p className="text-sm text-gray-600 text-center mt-2">
+                      {language === 'en' ? 'Scan to follow my WeChat' : '扫码关注我的微信公众号'}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-dark-gray mb-6">Send a Message</h2>
+            <h2 className="text-2xl font-bold text-dark-gray mb-6">{t.sendMessage}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Name
+                    {t.name}
                   </label>
                   <input
                     type="text"
@@ -148,12 +212,12 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-british-green focus:border-transparent transition-colors"
-                    placeholder="Your Name"
+                    placeholder={language === 'en' ? 'Your Name' : '您的姓名'}
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t.email}
                   </label>
                   <input
                     type="email"
@@ -163,14 +227,14 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-british-green focus:border-transparent transition-colors"
-                    placeholder="your.email@example.com"
+                    placeholder={language === 'en' ? 'your.email@example.com' : '您的邮箱地址'}
                   />
                 </div>
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
+                  {t.subject}
                 </label>
                 <input
                   type="text"
@@ -180,13 +244,13 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-british-green focus:border-transparent transition-colors"
-                  placeholder="What's this about?"
+                  placeholder={language === 'en' ? "What's this about?" : '关于什么？'}
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
+                  {t.message}
                 </label>
                 <textarea
                   id="message"
@@ -196,15 +260,26 @@ const Contact = () => {
                   required
                   rows={6}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-british-green focus:border-transparent transition-colors resize-none"
-                  placeholder="Tell me about your project or question..."
+                  placeholder={language === 'en' ? 'Tell me about your project or question...' : '告诉我您的项目或问题...'}
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full btn-primary"
+                className="w-full btn-primary flex items-center justify-center"
+                disabled={isSubmitting}
               >
-                Send Message
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t.sending}
+                  </>
+                ) : (
+                  t.submit
+                )}
               </button>
             </form>
           </div>

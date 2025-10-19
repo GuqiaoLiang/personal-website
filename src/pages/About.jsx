@@ -31,7 +31,7 @@ const About = () => {
                 />
               </div>
               <h2 className="text-2xl font-bold text-center text-dark-gray mb-4">
-                梁谷乔 (Guqiao Liang)
+                Guqiao Liang (Allen)
               </h2>
               <p className="text-gray-600 text-center mb-6">
                 Computer Science Student | AI Enthusiast

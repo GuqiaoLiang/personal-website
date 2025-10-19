@@ -187,7 +187,7 @@ const Contact = () => {
                       className="w-48 h-48 object-cover rounded"
                     />
                     <p className="text-sm text-gray-600 text-center mt-2">
-                      {language === 'en' ? 'Scan to follow my WeChat' : '扫码关注我的微信公众号'}
+                      {language === 'en' ? 'Scan to follow my WeChat Publication Account' : '扫码关注我的微信公众号'}
                     </p>
                   </div>
                 </div>

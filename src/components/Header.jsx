@@ -26,7 +26,7 @@ const Header = () => {
             to="/"
             className="text-2xl font-bold text-british-green hover:text-royal-blue transition-colors"
           >
-            Guqiao Liang (梁谷乔)
+            Guqiao Liang (Allen)
           </Link>
 
           {/* Desktop Navigation */}

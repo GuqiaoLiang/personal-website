@@ -32,10 +32,10 @@ export const translations = {
     graduation: 'Expected Graduation: 2025',
     interests: 'Interests & Hobbies',
     interestsList: [
-      'Web Development & Design',
-      'Open Source Projects',
-      'Photography & Travel',
-      'Reading Tech Blogs'
+      'Diary Writing',
+      'Puzzle Solving',
+      'Gym training',
+      'Sharing Insights'
     ],
 
     // Resume Page
@@ -101,10 +101,10 @@ export const translations = {
     graduation: '预计毕业时间：2025年',
     interests: '兴趣与爱好',
     interestsList: [
-      'Web开发与设计',
-      '开源项目',
-      '摄影与旅行',
-      '阅读技术博客'
+      '记日记',
+      '解谜',
+      '健身',
+      '分享见解'
     ],
 
     // Resume Page

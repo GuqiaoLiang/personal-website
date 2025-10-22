@@ -8,7 +8,7 @@ export const translations = {
     contact: 'Contact',
 
     // Home Page
-    motto: 'simplicity is the ultimate sophistication',
+    motto: 'Simplicity is the Ultimate Sophistication',
     viewProjects: 'View Projects',
     contactMe: 'Contact Me',
     aboutMe: 'About Me',

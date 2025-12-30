@@ -14,35 +14,35 @@ const BlogPost = () => {
   const blogMeta = {
     1: {
       title: language === 'en' ? 'Getting Started with React and Vite' : 'React 和 Vite 入门指南',
-      date: '2024-12-15',
+      date: '2025-12-15',
       category: language === 'en' ? 'Web Development' : 'Web 开发',
       readTime: language === 'en' ? '5 min read' : '5 分钟阅读',
       file: 'react-vite-guide.md'
     },
     2: {
       title: language === 'en' ? 'Understanding Large Language Models' : '理解大型语言模型',
-      date: '2024-12-10',
+      date: '2025-12-10',
       category: language === 'en' ? 'AI & Machine Learning' : 'AI 与机器学习',
       readTime: language === 'en' ? '8 min read' : '8 分钟阅读',
       file: 'llm-guide.md'
     },
     3: {
       title: language === 'en' ? 'Building a RISC-V CPU from Scratch' : '从零开始构建 RISC-V CPU',
-      date: '2024-12-05',
+      date: '2025-12-05',
       category: language === 'en' ? 'Computer Architecture' : '计算机架构',
       readTime: language === 'en' ? '10 min read' : '10 分钟阅读',
       file: 'riscv-cpu.md'
     },
     4: {
       title: language === 'en' ? 'My Journey in Computer Science' : '我的计算机科学之旅',
-      date: '2024-11-28',
+      date: '2025-11-28',
       category: language === 'en' ? 'Personal' : '个人感悟',
       readTime: language === 'en' ? '6 min read' : '6 分钟阅读',
       file: 'cs-journey.md'
     },
     5: {
       title: language === 'en' ? 'Guide to Making Baozi (Chinese Steamed Buns)' : '包包子指南：从零开始的家常美味',
-      date: '2024-12-30',
+      date: '2025-12-30',
       category: language === 'en' ? 'Food & Cooking' : '美食烹饪',
       readTime: language === 'en' ? '12 min read' : '12 分钟阅读',
       file: 'baozi-guide.md'

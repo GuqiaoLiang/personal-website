@@ -10,7 +10,7 @@ const Blog = () => {
     {
       id: 1,
       title: language === 'en' ? 'Getting Started with React and Vite' : 'React 和 Vite 入门指南',
-      date: '2024-12-15',
+      date: '2025-12-15',
       excerpt: language === 'en' 
         ? 'Learn how to set up a modern React development environment with Vite for blazing fast performance.'
         : '学习如何使用 Vite 搭建现代化的 React 开发环境，获得极速的性能体验。',
@@ -20,7 +20,7 @@ const Blog = () => {
     {
       id: 2,
       title: language === 'en' ? 'Understanding Large Language Models' : '理解大型语言模型',
-      date: '2024-12-10',
+      date: '2025-12-10',
       excerpt: language === 'en'
         ? 'An exploration of how LLMs work and their applications in modern software development.'
         : '探索大型语言模型的工作原理及其在现代软件开发中的应用。',
@@ -30,7 +30,7 @@ const Blog = () => {
     {
       id: 3,
       title: language === 'en' ? 'Building a RISC-V CPU from Scratch' : '从零开始构建 RISC-V CPU',
-      date: '2024-12-05',
+      date: '2025-12-05',
       excerpt: language === 'en'
         ? 'A deep dive into computer architecture and the process of designing a pipelined CPU.'
         : '深入探讨计算机架构以及设计流水线 CPU 的过程。',
@@ -40,7 +40,7 @@ const Blog = () => {
     {
       id: 4,
       title: language === 'en' ? 'My Journey in Computer Science' : '我的计算机科学之旅',
-      date: '2024-11-28',
+      date: '2025-11-28',
       excerpt: language === 'en'
         ? 'Reflections on my academic journey and the lessons learned along the way.'
         : '回顾我的学术之旅以及一路走来学到的经验教训。',
@@ -50,7 +50,7 @@ const Blog = () => {
     {
       id: 5,
       title: language === 'en' ? 'Guide to Making Baozi (Chinese Steamed Buns)' : '包包子指南：从零开始的家常美味',
-      date: '2024-12-30',
+      date: '2025-12-30',
       excerpt: language === 'en'
         ? 'A comprehensive guide to making delicious Chinese steamed buns from scratch, with step-by-step instructions and tips.'
         : '从零开始制作美味包子的全面指南，包含详细步骤和技巧。',

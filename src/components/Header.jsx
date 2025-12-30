@@ -12,6 +12,7 @@ const Header = () => {
     { name: language === 'en' ? 'About' : '关于', href: '/about' },
     { name: language === 'en' ? 'Resume' : '简历', href: '/resume' },
     { name: language === 'en' ? 'Projects' : '项目', href: '/projects' },
+    { name: language === 'en' ? 'Blog' : '博客', href: '/blog' },
     { name: language === 'en' ? 'Contact' : '联系', href: '/contact' },
   ]
 

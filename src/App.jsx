@@ -8,6 +8,8 @@ import About from './pages/About'
 import Resume from './pages/Resume'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 
 function App() {
   // Handle redirect from 404 page
@@ -30,6 +32,8 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/resume" element={<Resume />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/contact" element={<Contact />} />
               {/* Fallback route for SPA */}
               <Route path="*" element={<Home />} />

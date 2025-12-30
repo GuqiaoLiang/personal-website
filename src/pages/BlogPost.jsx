@@ -39,6 +39,13 @@ const BlogPost = () => {
       category: language === 'en' ? 'Personal' : '个人感悟',
       readTime: language === 'en' ? '6 min read' : '6 分钟阅读',
       file: 'cs-journey.md'
+    },
+    5: {
+      title: language === 'en' ? 'Guide to Making Baozi (Chinese Steamed Buns)' : '包包子指南：从零开始的家常美味',
+      date: '2024-12-30',
+      category: language === 'en' ? 'Food & Cooking' : '美食烹饪',
+      readTime: language === 'en' ? '12 min read' : '12 分钟阅读',
+      file: 'baozi-guide.md'
     }
   }
 

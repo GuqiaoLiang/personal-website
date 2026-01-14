@@ -46,6 +46,14 @@ const BlogPost = () => {
       category: language === 'en' ? 'Food & Cooking' : '美食烹饪',
       readTime: language === 'en' ? '12 min read' : '12 分钟阅读',
       file: 'baozi-guide.md'
+    },
+
+    6: {
+      title: language === 'en' ? 'Operating System Review' : '操作系统期末复习',
+      date: '2026-1-11',
+      category: language === 'en' ? 'System & Architecture' : '计算机系统和架构',
+      readTime: language === 'en' ? '30 min read' : '30 分钟阅读',
+      file: 'operating_system_review.md'
     }
   }
 

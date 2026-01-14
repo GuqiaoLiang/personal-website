@@ -56,6 +56,17 @@ const Blog = () => {
         : '从零开始制作美味包子的全面指南，包含详细步骤和技巧。',
       category: language === 'en' ? 'Food & Cooking' : '美食烹饪',
       readTime: language === 'en' ? '12 min read' : '12 分钟阅读'
+    },
+
+    {
+      id: 6,
+      title: language === 'en' ? 'Operating System Review' : '操作系统期末复习',
+      date: '2026-1-11',
+      excerpt: language === 'en'
+        ? "Feeling panic about OS final exam? Don't worry, this blog may help you!  "
+        : '你是否对操作系统期末考试感到焦虑？ 没关系，乔哥的博客会帮你',
+      category: language === 'en' ? 'System & Architecture' : '计算机系统和架构',
+      readTime: language === 'en' ? '12 min read' : '30 分钟阅读'
     }
   ]
 

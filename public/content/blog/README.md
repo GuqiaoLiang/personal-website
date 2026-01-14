@@ -3,23 +3,25 @@
 ## 目录结构
 
 ```
-public/blog/
+public/content/blog/
 ├── README.md                 # 本文档
+├── index.json                # 博客文章列表与元数据
 ├── images/                   # 博客文章图片目录
 │   ├── baozi-finished.jpg   # 包子成品图
 │   └── baozi-steaming.jpg   # 包子蒸制图
-├── baozi-guide.md           # 包包子指南
-├── cs-journey.md            # 我的计算机科学之旅
-├── llm-guide.md             # 理解大型语言模型
-├── react-vite-guide.md      # React 和 Vite 入门指南
-└── riscv-cpu.md             # 从零开始构建 RISC-V CPU
+└── posts/                    # 博客文章目录
+    ├── baozi-guide.md       # 包包子指南
+    ├── cs-journey.md        # 我的计算机科学之旅
+    ├── llm-guide.md         # 理解大型语言模型
+    ├── react-vite-guide.md  # React 和 Vite 入门指南
+    └── riscv-cpu.md         # 从零开始构建 RISC-V CPU
 ```
 
 ## 如何添加新文章
 
 ### 步骤 1: 创建 Markdown 文件
 
-在 `public/blog/` 目录下创建新的 `.md` 文件，例如 `my-new-article.md`。
+在 `public/content/blog/posts/` 目录下创建新的 `.md` 文件，例如 `my-new-article.md`。
 
 ### 步骤 2: 编写文章内容
 
@@ -59,15 +61,15 @@ $$
 
 **图片**：
 ```markdown
-![图片描述](/blog/images/your-image.jpg)
+![图片描述](/content/blog/images/your-image.jpg)
 ```
 
 ### 步骤 3: 添加图片（如需要）
 
-将图片文件放入 `public/blog/images/` 目录，然后在 Markdown 中引用：
+将图片文件放入 `public/content/blog/images/` 目录，然后在 Markdown 中引用：
 
 ```markdown
-![图片说明](/blog/images/your-image.jpg)
+![图片说明](/content/blog/images/your-image.jpg)
 
 _图：图片标题_
 ```
@@ -79,39 +81,18 @@ _图：图片标题_
 
 ### 步骤 4: 更新文章元数据
 
-在 `src/pages/BlogPost.jsx` 中添加文章元数据：
+在 `public/content/blog/index.json` 中添加文章元数据：
 
-```javascript
-const blogMeta = {
-  // ... 其他文章
-  6: {
-    id: 6,
-    title: "你的文章标题",
-    category: "分类名称",
-    date: "2024-12-30",
-    readTime: "10 min read",
-    file: "my-new-article.md"
-  }
-};
-```
-
-### 步骤 5: 更新博客列表
-
-在 `src/pages/Blog.jsx` 中添加文章卡片：
-
-```javascript
-const blogPosts = [
-  // ... 其他文章
-  {
-    id: 6,
-    title: "你的文章标题",
-    category: "分类名称",
-    date: "2024-12-30",
-    readTime: "10 min read",
-    description: "文章简短描述，显示在列表中",
-    link: "/blog/6"
-  }
-];
+```json
+{
+  "id": 6,
+  "title": { "en": "Your Title", "zh": "你的文章标题" },
+  "date": "2024-12-30",
+  "excerpt": { "en": "Short summary...", "zh": "简短摘要..." },
+  "category": { "en": "Category", "zh": "分类名称" },
+  "readTime": { "en": "10 min read", "zh": "10 分钟阅读" },
+  "file": "my-new-article.md"
+}
 ```
 
 ## 文章分类
@@ -217,7 +198,7 @@ $$
 
 ### 图片展示
 
-![图片描述](/blog/images/your-image.jpg)
+![图片描述](/content/blog/images/your-image.jpg)
 
 _图：图片标题_
 
@@ -234,7 +215,7 @@ _图：图片标题_
 ## 图片管理
 
 ### 图片存储位置
-- **博客文章图片**：`public/blog/images/`
+- **博客文章图片**：`public/content/blog/images/`
 - **网站资源图片**：`src/assets/images/`
 
 ### 图片优化建议
@@ -299,8 +280,8 @@ _图：图片标题_
 
 ### 问题：图片不显示
 **解决方案**：
-1. 检查图片路径是否正确（使用 `/blog/images/` 开头）
-2. 确认图片文件已放入 `public/blog/images/` 目录
+1. 检查图片路径是否正确（使用 `/content/blog/images/` 开头）
+2. 确认图片文件已放入 `public/content/blog/images/` 目录
 3. 检查图片文件名是否与 Markdown 中的引用一致
 
 ### 问题：数学公式显示为乱码

@@ -16,7 +16,7 @@ personal-website/
 │   │   ├── README.md               # 博客管理文档
 │   │   └── *.md                    # 博客文章 Markdown 文件
 │   ├── 404.html                    # 404 错误页面
-│   └── GuqiaoLIANG_CV.pdf          # 简历 PDF 文件
+│   └── content/assets/GuqiaoLIANG_CV.pdf  # 简历 PDF 文件
 │
 └── src/                            # 源代码目录
     └── assets/                     # 源代码资源（需要构建处理）
@@ -34,12 +34,12 @@ personal-website/
 
 ## 资源分类
 
-### 1. 博客图片 (`public/blog/images/`)
+### 1. 博客图片 (`public/content/blog/images/`)
 
 **用途**：博客文章中使用的图片
 
 **特点**：
-- 直接通过 URL 路径访问：`/blog/images/filename.jpg`
+- 直接通过 URL 路径访问：`/content/blog/images/filename.jpg`
 - 不经过 Vite 构建处理
 - 适合动态内容和用户上传的图片
 
@@ -52,10 +52,10 @@ personal-website/
 **添加新图片**：
 ```bash
 # 复制图片到目录
-cp your-image.jpg public/blog/images/
+cp your-image.jpg public/content/blog/images/
 
 # 在 Markdown 中引用
-![图片描述](/blog/images/your-image.jpg)
+![图片描述](/content/blog/images/your-image.jpg)
 ```
 
 ### 2. 网站页面图片 (`src/assets/images/`)
@@ -94,13 +94,13 @@ import { selfie } from '../../assets/images';
 ### 3. 文档资源 (`public/`)
 
 **当前文件**：
-- `GuqiaoLIANG_CV.pdf` - 个人简历 PDF
+- `content/assets/GuqiaoLIANG_CV.pdf` - 个人简历 PDF
 - `404.html` - 自定义 404 页面
 
 **访问方式**：
 ```html
 <!-- 直接通过 URL 访问 -->
-<a href="/GuqiaoLIANG_CV.pdf" download>Download CV</a>
+<a href="/content/assets/GuqiaoLIANG_CV.pdf" download>Download CV</a>
 ```
 
 ## 图片优化指南
@@ -209,13 +209,13 @@ pngquant --quality=65-80 input.png -o output.png
 ```bash
 # 1. 准备图片（压缩优化）
 # 2. 复制到博客图片目录
-cp your-image.jpg public/blog/images/
+cp your-image.jpg public/content/blog/images/
 
 # 3. 在 Markdown 文章中引用
-# ![图片描述](/blog/images/your-image.jpg)
+# ![图片描述](/content/blog/images/your-image.jpg)
 
 # 4. 提交到 Git
-git add public/blog/images/your-image.jpg
+git add public/content/blog/images/your-image.jpg
 git commit -m "Add blog image: your-image.jpg"
 ```
 
@@ -352,7 +352,7 @@ git commit -m "Configure Git LFS"
 
 ```bash
 # 查看所有图片大小
-find public/blog/images -type f -exec ls -lh {} \; | awk '{print $9, $5}'
+find public/content/blog/images -type f -exec ls -lh {} \; | awk '{print $9, $5}'
 find src/assets/images -type f -name "*.jpg" -o -name "*.png" | xargs ls -lh
 ```
 
@@ -390,7 +390,7 @@ find src/assets/images -type f -name "*.jpg" -o -name "*.png" | xargs ls -lh
 **解决方案**：
 ```bash
 # 检查文件是否存在
-ls -la public/blog/images/your-image.jpg
+ls -la public/content/blog/images/your-image.jpg
 
 # 检查 Git 状态
 git status
@@ -410,7 +410,7 @@ git status
 ### 问题：构建后图片路径错误
 
 **解决方案**：
-- `public/` 中的文件使用绝对路径：`/blog/images/file.jpg`
+- `public/` 中的文件使用绝对路径：`/content/blog/images/file.jpg`
 - `src/assets/` 中的文件使用 import 导入
 
 ## 联系方式

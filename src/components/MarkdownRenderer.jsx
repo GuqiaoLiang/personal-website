@@ -1,12 +1,79 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState, useId } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
+import mermaid from 'mermaid'
 import 'katex/dist/katex.min.css'
 import 'highlight.js/styles/github-dark.css'
+
+let mermaidInitialized = false
+
+const MermaidDiagram = ({ chart }) => {
+  const [svg, setSvg] = useState('')
+  const [renderError, setRenderError] = useState(false)
+  const id = useId()
+  const safeId = useMemo(() => `mermaid-${id.replace(/[:]/g, '')}`, [id])
+
+  useEffect(() => {
+    let cancelled = false
+
+    if (!mermaidInitialized) {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          background: '#f6f1e6',
+          primaryColor: '#ece9ff',
+          secondaryColor: '#ece9ff',
+          tertiaryColor: '#ece9ff',
+          lineColor: '#111111',
+          textColor: '#111111',
+          edgeLabelBackground: '#f6f1e6',
+          nodeBorder: '#9b8cff'
+        }
+      })
+      mermaidInitialized = true
+    }
+
+    const renderChart = async () => {
+      try {
+        const { svg: renderedSvg } = await mermaid.render(safeId, chart)
+        if (!cancelled) {
+          setSvg(renderedSvg)
+          setRenderError(false)
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setRenderError(true)
+        }
+      }
+    }
+
+    renderChart()
+
+    return () => {
+      cancelled = true
+    }
+  }, [chart, safeId])
+
+  if (renderError) {
+    return (
+      <pre className="bg-white text-gray-900 p-4 rounded-lg border border-gray-200 overflow-x-auto">
+        {chart}
+      </pre>
+    )
+  }
+
+  return (
+    <div
+      className="mermaid-diagram my-6 overflow-x-auto bg-white rounded-lg border border-gray-200 p-4"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  )
+}
 
 const MarkdownRenderer = ({ content }) => {
   return (
@@ -46,6 +113,10 @@ const MarkdownRenderer = ({ content }) => {
           
           // 自定义代码块样式
           code: ({ node, inline, className, children, ...props }) => {
+            const match = /language-(\w+)/.exec(className || '')
+            if (!inline && match?.[1] === 'mermaid') {
+              return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />
+            }
             if (inline) {
               return (
                 <code 
@@ -67,8 +138,10 @@ const MarkdownRenderer = ({ content }) => {
           },
           
           // 自定义预格式化文本样式
-          pre: ({ node, ...props }) => (
-            <pre className="bg-gray-900 rounded-lg mb-4 overflow-x-auto" {...props} />
+          pre: ({ node, children }) => (
+            <pre className="mb-4 overflow-x-auto">
+              {children}
+            </pre>
           ),
           
           // 自定义表格样式

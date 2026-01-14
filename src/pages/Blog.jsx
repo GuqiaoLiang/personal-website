@@ -1,74 +1,47 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 
 const Blog = () => {
   const { language } = useLanguage()
+  const [blogPosts, setBlogPosts] = useState([])
 
-  // Sample blog posts data
-  const blogPosts = [
-    {
-      id: 1,
-      title: language === 'en' ? 'Getting Started with React and Vite' : 'React 和 Vite 入门指南',
-      date: '2025-12-15',
-      excerpt: language === 'en' 
-        ? 'Learn how to set up a modern React development environment with Vite for blazing fast performance.'
-        : '学习如何使用 Vite 搭建现代化的 React 开发环境，获得极速的性能体验。',
-      category: language === 'en' ? 'Web Development' : 'Web 开发',
-      readTime: language === 'en' ? '5 min read' : '5 分钟阅读'
-    },
-    {
-      id: 2,
-      title: language === 'en' ? 'Understanding Large Language Models' : '理解大型语言模型',
-      date: '2025-12-10',
-      excerpt: language === 'en'
-        ? 'An exploration of how LLMs work and their applications in modern software development.'
-        : '探索大型语言模型的工作原理及其在现代软件开发中的应用。',
-      category: language === 'en' ? 'AI & Machine Learning' : 'AI 与机器学习',
-      readTime: language === 'en' ? '8 min read' : '8 分钟阅读'
-    },
-    {
-      id: 3,
-      title: language === 'en' ? 'Building a RISC-V CPU from Scratch' : '从零开始构建 RISC-V CPU',
-      date: '2025-12-05',
-      excerpt: language === 'en'
-        ? 'A deep dive into computer architecture and the process of designing a pipelined CPU.'
-        : '深入探讨计算机架构以及设计流水线 CPU 的过程。',
-      category: language === 'en' ? 'Computer Architecture' : '计算机架构',
-      readTime: language === 'en' ? '10 min read' : '10 分钟阅读'
-    },
-    {
-      id: 4,
-      title: language === 'en' ? 'My Journey in Computer Science' : '我的计算机科学之旅',
-      date: '2025-11-28',
-      excerpt: language === 'en'
-        ? 'Reflections on my academic journey and the lessons learned along the way.'
-        : '回顾我的学术之旅以及一路走来学到的经验教训。',
-      category: language === 'en' ? 'Personal' : '个人感悟',
-      readTime: language === 'en' ? '6 min read' : '6 分钟阅读'
-    },
-    {
-      id: 5,
-      title: language === 'en' ? 'Guide to Making Baozi (Chinese Steamed Buns)' : '包包子指南：从零开始的家常美味',
-      date: '2025-12-30',
-      excerpt: language === 'en'
-        ? 'A comprehensive guide to making delicious Chinese steamed buns from scratch, with step-by-step instructions and tips.'
-        : '从零开始制作美味包子的全面指南，包含详细步骤和技巧。',
-      category: language === 'en' ? 'Food & Cooking' : '美食烹饪',
-      readTime: language === 'en' ? '12 min read' : '12 分钟阅读'
-    },
+  useEffect(() => {
+    let cancelled = false
 
-    {
-      id: 6,
-      title: language === 'en' ? 'Operating System Review' : '操作系统期末复习',
-      date: '2026-1-11',
-      excerpt: language === 'en'
-        ? "Feeling panic about OS final exam? Don't worry, this blog may help you!  "
-        : '你是否对操作系统期末考试感到焦虑？ 没关系，乔哥的博客会帮你',
-      category: language === 'en' ? 'System & Architecture' : '计算机系统和架构',
-      readTime: language === 'en' ? '12 min read' : '30 分钟阅读'
+    const loadPosts = async () => {
+      try {
+        const response = await fetch('/content/blog/index.json')
+        if (!response.ok) {
+          throw new Error('Failed to load blog index')
+        }
+        const data = await response.json()
+        if (!cancelled) {
+          setBlogPosts(Array.isArray(data?.posts) ? data.posts : [])
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setBlogPosts([])
+        }
+      }
     }
-  ]
+
+    loadPosts()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const localizedPosts = useMemo(() => (
+    blogPosts.map((post) => ({
+      ...post,
+      title: post.title?.[language] || post.title?.en || post.title?.zh || '',
+      excerpt: post.excerpt?.[language] || post.excerpt?.en || post.excerpt?.zh || '',
+      category: post.category?.[language] || post.category?.en || post.category?.zh || '',
+      readTime: post.readTime?.[language] || post.readTime?.en || post.readTime?.zh || ''
+    }))
+  ), [blogPosts, language])
 
   return (
     <div className="section-padding">
@@ -87,7 +60,7 @@ const Blog = () => {
 
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {blogPosts.map((post) => (
+          {localizedPosts.map((post) => (
             <Link
               key={post.id}
               to={`/blog/${post.id}`}

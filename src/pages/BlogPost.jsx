@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import MarkdownRenderer from '../components/MarkdownRenderer'
@@ -9,58 +9,52 @@ const BlogPost = () => {
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [postsIndex, setPostsIndex] = useState([])
+  const [indexLoading, setIndexLoading] = useState(true)
 
-  // 博客文章元数据
-  const blogMeta = {
-    1: {
-      title: language === 'en' ? 'Getting Started with React and Vite' : 'React 和 Vite 入门指南',
-      date: '2025-12-15',
-      category: language === 'en' ? 'Web Development' : 'Web 开发',
-      readTime: language === 'en' ? '5 min read' : '5 分钟阅读',
-      file: 'react-vite-guide.md'
-    },
-    2: {
-      title: language === 'en' ? 'Understanding Large Language Models' : '理解大型语言模型',
-      date: '2025-12-10',
-      category: language === 'en' ? 'AI & Machine Learning' : 'AI 与机器学习',
-      readTime: language === 'en' ? '8 min read' : '8 分钟阅读',
-      file: 'llm-guide.md'
-    },
-    3: {
-      title: language === 'en' ? 'Building a RISC-V CPU from Scratch' : '从零开始构建 RISC-V CPU',
-      date: '2025-12-05',
-      category: language === 'en' ? 'Computer Architecture' : '计算机架构',
-      readTime: language === 'en' ? '10 min read' : '10 分钟阅读',
-      file: 'riscv-cpu.md'
-    },
-    4: {
-      title: language === 'en' ? 'My Journey in Computer Science' : '我的计算机科学之旅',
-      date: '2025-11-28',
-      category: language === 'en' ? 'Personal' : '个人感悟',
-      readTime: language === 'en' ? '6 min read' : '6 分钟阅读',
-      file: 'cs-journey.md'
-    },
-    5: {
-      title: language === 'en' ? 'Guide to Making Baozi (Chinese Steamed Buns)' : '包包子指南：从零开始的家常美味',
-      date: '2025-12-30',
-      category: language === 'en' ? 'Food & Cooking' : '美食烹饪',
-      readTime: language === 'en' ? '12 min read' : '12 分钟阅读',
-      file: 'baozi-guide.md'
-    },
+  useEffect(() => {
+    let cancelled = false
 
-    6: {
-      title: language === 'en' ? 'Operating System Review' : '操作系统期末复习',
-      date: '2026-1-11',
-      category: language === 'en' ? 'System & Architecture' : '计算机系统和架构',
-      readTime: language === 'en' ? '30 min read' : '30 分钟阅读',
-      file: 'operating_system_review.md'
+    const loadIndex = async () => {
+      try {
+        const response = await fetch('/content/blog/index.json')
+        if (!response.ok) {
+          throw new Error('Failed to load blog index')
+        }
+        const data = await response.json()
+        if (!cancelled) {
+          setPostsIndex(Array.isArray(data?.posts) ? data.posts : [])
+          setIndexLoading(false)
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setPostsIndex([])
+          setIndexLoading(false)
+        }
+      }
     }
-  }
 
-  const post = blogMeta[id]
+    loadIndex()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const post = useMemo(() => {
+    const numericId = Number(id)
+    return postsIndex.find((item) => item.id === numericId) || null
+  }, [id, postsIndex])
+
+  const postTitle = post?.title?.[language] || post?.title?.en || post?.title?.zh || ''
+  const postCategory = post?.category?.[language] || post?.category?.en || post?.category?.zh || ''
+  const postReadTime = post?.readTime?.[language] || post?.readTime?.en || post?.readTime?.zh || ''
 
   useEffect(() => {
     const fetchMarkdown = async () => {
+      if (indexLoading) {
+        return
+      }
       if (!post || !post.file) {
         setError(language === 'en' ? 'Article content coming soon...' : '文章内容即将发布...')
         setLoading(false)
@@ -68,7 +62,7 @@ const BlogPost = () => {
       }
 
       try {
-        const response = await fetch(`/blog/${post.file}`)
+        const response = await fetch(`/content/blog/posts/${post.file}`)
         if (!response.ok) {
           throw new Error('Failed to load article')
         }
@@ -82,7 +76,19 @@ const BlogPost = () => {
     }
 
     fetchMarkdown()
-  }, [id, post, language])
+  }, [id, post, language, indexLoading])
+
+  if (indexLoading) {
+    return (
+      <div className="section-padding">
+        <div className="container-custom text-center">
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-british-green"></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (!post) {
     return (
@@ -121,10 +127,10 @@ const BlogPost = () => {
           {/* 标题区域 */}
           <div className="bg-gradient-to-r from-british-green to-royal-blue text-white p-8 md:p-12">
             <div className="inline-block px-4 py-2 bg-white/20 rounded-full text-sm mb-4">
-              {post.category}
+              {postCategory}
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              {post.title}
+              {postTitle}
             </h1>
             <div className="flex flex-wrap items-center text-sm text-white/90 gap-4">
               <div className="flex items-center">
@@ -137,7 +143,7 @@ const BlogPost = () => {
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{post.readTime}</span>
+                <span>{postReadTime}</span>
               </div>
             </div>
           </div>
@@ -187,24 +193,30 @@ const BlogPost = () => {
             {language === 'en' ? 'More Articles' : '更多文章'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {Object.entries(blogMeta)
-              .filter(([key]) => key !== id)
+            {postsIndex
+              .filter((item) => item.id !== Number(id))
               .slice(0, 2)
-              .map(([key, article]) => (
+              .map((article) => {
+                const articleTitle = article.title?.[language] || article.title?.en || article.title?.zh || ''
+                const articleCategory = article.category?.[language] || article.category?.en || article.category?.zh || ''
+                const articleReadTime = article.readTime?.[language] || article.readTime?.en || article.readTime?.zh || ''
+
+                return (
                 <Link
-                  key={key}
-                  to={`/blog/${key}`}
+                  key={article.id}
+                  to={`/blog/${article.id}`}
                   className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow group"
                 >
-                  <div className="text-sm text-british-green mb-2">{article.category}</div>
+                  <div className="text-sm text-british-green mb-2">{articleCategory}</div>
                   <h3 className="text-xl font-bold text-dark-gray mb-2 group-hover:text-british-green transition-colors">
-                    {article.title}
+                    {articleTitle}
                   </h3>
                   <div className="text-sm text-gray-500">
-                    {article.date} • {article.readTime}
+                    {article.date} • {articleReadTime}
                   </div>
                 </Link>
-              ))}
+                )
+              })}
           </div>
         </div>
       </div>

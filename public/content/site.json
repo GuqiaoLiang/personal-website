@@ -1,0 +1,84 @@
+{
+  "projectsPage": {
+    "intro": {
+      "en": "Explore some of my technical projects and creative solutions",
+      "zh": "探索我的一些技术项目和创意解决方案"
+    },
+    "cta": {
+      "title": {
+        "en": "Want to collaborate on a project?",
+        "zh": "想要合作项目吗？"
+      },
+      "body": {
+        "en": "If you have an interesting project idea, I'd love to work with you!",
+        "zh": "如果您有有趣的项目想法，我很乐意与您合作！"
+      }
+    },
+    "projects": [
+      {
+        "id": "spreadsheet-agent",
+        "title": {
+          "en": "LLM-based Spreadsheet Processing Agent",
+          "zh": "基于LLM的电子表格处理代理"
+        },
+        "description": {
+          "en": "Research project exploring the application of Large Language Models in spreadsheet handling and data processing.",
+          "zh": "研究项目，探索大型语言模型在电子表格处理和数据应用中的应用。"
+        },
+        "technologies": ["LLM", "Research", "Python", "Data Analysis"],
+        "image": "/content/projects/images/spreadsheetAgent.png",
+        "github": "https://github.com/GuqiaoLiang",
+        "demo": "#",
+        "featured": true
+      },
+      {
+        "id": "build-your-own-world",
+        "title": {
+          "en": "Build Your Own World - 2D Maze Game",
+          "zh": "构建你自己的世界 - 2D迷宫游戏"
+        },
+        "description": {
+          "en": "Java-based 2D maze game with saving/loading functionality and A* algorithm pathfinding implementation.",
+          "zh": "基于Java的2D迷宫游戏，具有保存/加载功能和A*算法路径查找实现。"
+        },
+        "technologies": ["Java", "A* Algorithm", "Game Development", "Software Engineering"],
+        "image": "/content/projects/images/buildYourOwnWorld.png",
+        "github": "https://github.com/GuqiaoLiang",
+        "demo": "#",
+        "featured": true
+      },
+      {
+        "id": "riscv-cpu",
+        "title": {
+          "en": "RISC-V CPU Design",
+          "zh": "RISC-V CPU设计"
+        },
+        "description": {
+          "en": "2-stage pipelined CPU implementation using Logisim hardware simulator with smart branch prediction.",
+          "zh": "使用Logisim硬件模拟器实现的2级流水线CPU，具有智能分支预测功能。"
+        },
+        "technologies": ["RISC-V", "Logisim", "CPU Architecture", "Hardware Design"],
+        "image": "/content/projects/images/cpu.png",
+        "github": "https://github.com/GuqiaoLiang",
+        "demo": "#",
+        "featured": false
+      },
+      {
+        "id": "ai-3d-models",
+        "title": {
+          "en": "AI Techniques in 3D Model Generation",
+          "zh": "3D模型生成中的AI技术"
+        },
+        "description": {
+          "en": "Exploration of 3D generative models and creation of animated character simulation using Mixamao and Unity.",
+          "zh": "探索3D生成模型，并使用Mixamao和Unity创建动画角色模拟。"
+        },
+        "technologies": ["3D Modeling", "AI", "Unity", "Computer Graphics"],
+        "image": "/content/projects/images/3DModel.png",
+        "github": "https://github.com/GuqiaoLiang",
+        "demo": "#",
+        "featured": false
+      }
+    ]
+  }
+}

@@ -49,18 +49,22 @@ A modern, responsive personal portfolio website built with React, featuring a Br
 ```
 personal-website/
 ├── public/                          # Public static assets
-│   ├── blog/                       # Blog system
-│   │   ├── images/                 # Blog article images
-│   │   │   ├── baozi-finished.jpg
-│   │   │   └── baozi-steaming.jpg
-│   │   ├── README.md               # Blog management guide
-│   │   ├── baozi-guide.md          # Blog articles
-│   │   ├── cs-journey.md
-│   │   ├── llm-guide.md
-│   │   ├── react-vite-guide.md
-│   │   └── riscv-cpu.md
 │   ├── 404.html
-│   └── GuqiaoLIANG_CV.pdf
+│   └── content/                    # Public content
+│       ├── assets/
+│       │   └── GuqiaoLIANG_CV.pdf
+│       └── blog/
+│           ├── images/             # Blog article images
+│           │   ├── baozi-finished.jpg
+│           │   └── baozi-steaming.jpg
+│           ├── README.md           # Blog management guide
+│           ├── index.json          # Blog posts index
+│           └── posts/              # Blog articles
+│               ├── baozi-guide.md
+│               ├── cs-journey.md
+│               ├── llm-guide.md
+│               ├── react-vite-guide.md
+│               └── riscv-cpu.md
 │
 ├── src/
 │   ├── assets/                     # Source assets
@@ -101,8 +105,8 @@ personal-website/
 │   ├── App.jsx                     # Main app component
 │   └── main.jsx                    # Entry point
 │
-├── ASSETS_MANAGEMENT.md            # Assets management guide
-├── EMAILJS_SETUP.md                # EmailJS configuration
+├── docs/ASSETS_MANAGEMENT.md       # Assets management guide
+├── docs/EMAILJS_SETUP.md           # EmailJS configuration
 ├── README.md                       # This file
 ├── index.html                      # HTML template
 ├── package.json                    # Dependencies
@@ -197,9 +201,9 @@ personal-website/
 
 ### Adding a New Article
 
-1. **Create Markdown file** in `public/blog/`:
+1. **Create Markdown file** in `public/content/blog/posts/`:
    ```bash
-   touch public/blog/my-new-article.md
+   touch public/content/blog/posts/my-new-article.md
    ```
 
 2. **Write content** with Markdown:
@@ -221,59 +225,41 @@ personal-website/
    $$
    
    ### Image
-   ![Description](/blog/images/your-image.jpg)
+   ![Description](/content/blog/images/your-image.jpg)
    ```
 
 3. **Add images** (if needed):
    ```bash
-   cp your-image.jpg public/blog/images/
+   cp your-image.jpg public/content/blog/images/
    ```
 
-4. **Update metadata** in `src/pages/BlogPost.jsx`:
-   ```javascript
-   const blogMeta = {
-     // ...
-     6: {
-       id: 6,
-       title: "Your Article Title",
-       category: "Category Name",
-       date: "2024-12-30",
-       readTime: "10 min read",
-       file: "my-new-article.md"
-     }
-   };
+4. **Update metadata** in `public/content/blog/index.json`:
+   ```json
+   {
+     "id": 6,
+     "title": { "en": "Your Article Title", "zh": "你的文章标题" },
+     "date": "2024-12-30",
+     "excerpt": { "en": "Brief description...", "zh": "简短描述..." },
+     "category": { "en": "Category Name", "zh": "分类名称" },
+     "readTime": { "en": "10 min read", "zh": "10 分钟阅读" },
+     "file": "my-new-article.md"
+   }
    ```
 
-5. **Update blog list** in `src/pages/Blog.jsx`:
-   ```javascript
-   const blogPosts = [
-     // ...
-     {
-       id: 6,
-       title: "Your Article Title",
-       category: "Category Name",
-       date: "2024-12-30",
-       readTime: "10 min read",
-       description: "Brief description...",
-       link: "/blog/6"
-     }
-   ];
-   ```
-
-For detailed instructions, see [`public/blog/README.md`](public/blog/README.md).
+For detailed instructions, see [`public/content/blog/README.md`](public/content/blog/README.md).
 
 ## 🖼️ Assets Management
 
 ### Directory Structure
-- **Blog images**: `public/blog/images/` - Accessed via `/blog/images/filename.jpg`
+- **Blog images**: `public/content/blog/images/` - Accessed via `/content/blog/images/filename.jpg`
 - **Website images**: `src/assets/images/` - Imported via ES6 modules
 
 ### Adding Images
 
 **For blog articles**:
 ```bash
-cp your-image.jpg public/blog/images/
-# Reference in Markdown: ![Alt text](/blog/images/your-image.jpg)
+cp your-image.jpg public/content/blog/images/
+# Reference in Markdown: ![Alt text](/content/blog/images/your-image.jpg)
 ```
 
 **For website pages**:
@@ -289,7 +275,7 @@ cp your-image.jpg src/assets/images/
 - **Max file size**: 500 KB for blog images, 1 MB for project screenshots
 - **Tools**: TinyPNG, Squoosh, ImageOptim
 
-For detailed guidelines, see [`ASSETS_MANAGEMENT.md`](ASSETS_MANAGEMENT.md).
+For detailed guidelines, see [`docs/ASSETS_MANAGEMENT.md`](docs/ASSETS_MANAGEMENT.md).
 
 ## 🎨 Customization
 
@@ -306,7 +292,7 @@ colors: {
 ### Content
 1. **Personal information**: Edit `src/pages/About.jsx`, `Contact.jsx`
 2. **Projects**: Update `src/pages/Projects.jsx`
-3. **Resume**: Replace `public/GuqiaoLIANG_CV.pdf`
+3. **Resume**: Replace `public/content/assets/GuqiaoLIANG_CV.pdf`
 4. **Images**: Add to `src/assets/images/` and export in `index.js`
 
 ### Translations
@@ -373,7 +359,7 @@ VITE_EMAILJS_TEMPLATE_ID=your_template_id
 VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
-See [`EMAILJS_SETUP.md`](EMAILJS_SETUP.md) for details.
+See [`docs/EMAILJS_SETUP.md`](docs/EMAILJS_SETUP.md) for details.
 
 ## 📊 Performance
 
@@ -407,9 +393,9 @@ Optimizations:
 
 ## 📚 Documentation
 
-- [Blog Management Guide](public/blog/README.md)
-- [Assets Management Guide](ASSETS_MANAGEMENT.md)
-- [EmailJS Setup Guide](EMAILJS_SETUP.md)
+- [Blog Management Guide](public/content/blog/README.md)
+- [Assets Management Guide](docs/ASSETS_MANAGEMENT.md)
+- [EmailJS Setup Guide](docs/EMAILJS_SETUP.md)
 
 ## 📝 License
 

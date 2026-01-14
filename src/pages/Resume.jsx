@@ -74,7 +74,7 @@ const Resume = () => {
           </p>
           <div className="mt-6">
             <a
-              href="/GuqiaoLIANG_CV.pdf"
+              href="/content/assets/GuqiaoLIANG_CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary inline-flex items-center"

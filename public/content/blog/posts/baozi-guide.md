@@ -154,7 +154,7 @@ $$
 - 蒸出来的包子不会回缩
 - 口感更加柔软
 
-![二次发酵中的包子](/blog/images/baozi-steaming.jpg)
+![二次发酵中的包子](/content/blog/images/baozi-steaming.jpg)
 *图：正在蒸锅中进行二次发酵的包子*
 
 ### 第五步：蒸制
@@ -201,7 +201,7 @@ def steaming_process():
 
 ## 成品展示
 
-![蒸好的包子](/blog/images/baozi-finished.jpg)
+![蒸好的包子](/content/blog/images/baozi-finished.jpg)
 *图：刚出锅的包子，松软可口*
 
 从图片中可以看到，包子表面光滑，褶皱清晰，色泽洁白。这就是成功的包子应该有的样子！

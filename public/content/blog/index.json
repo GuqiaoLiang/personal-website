@@ -1,0 +1,130 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": {
+        "en": "Getting Started with React and Vite",
+        "zh": "React 和 Vite 入门指南"
+      },
+      "date": "2025-12-15",
+      "excerpt": {
+        "en": "Learn how to set up a modern React development environment with Vite for blazing fast performance.",
+        "zh": "学习如何使用 Vite 搭建现代化的 React 开发环境，获得极速的性能体验。"
+      },
+      "category": {
+        "en": "Web Development",
+        "zh": "Web 开发"
+      },
+      "readTime": {
+        "en": "5 min read",
+        "zh": "5 分钟阅读"
+      },
+      "file": "react-vite-guide.md"
+    },
+    {
+      "id": 2,
+      "title": {
+        "en": "Understanding Large Language Models",
+        "zh": "理解大型语言模型"
+      },
+      "date": "2025-12-10",
+      "excerpt": {
+        "en": "An exploration of how LLMs work and their applications in modern software development.",
+        "zh": "探索大型语言模型的工作原理及其在现代软件开发中的应用。"
+      },
+      "category": {
+        "en": "AI & Machine Learning",
+        "zh": "AI 与机器学习"
+      },
+      "readTime": {
+        "en": "8 min read",
+        "zh": "8 分钟阅读"
+      },
+      "file": "llm-guide.md"
+    },
+    {
+      "id": 3,
+      "title": {
+        "en": "Building a RISC-V CPU from Scratch",
+        "zh": "从零开始构建 RISC-V CPU"
+      },
+      "date": "2025-12-05",
+      "excerpt": {
+        "en": "A deep dive into computer architecture and the process of designing a pipelined CPU.",
+        "zh": "深入探讨计算机架构以及设计流水线 CPU 的过程。"
+      },
+      "category": {
+        "en": "Computer Architecture",
+        "zh": "计算机架构"
+      },
+      "readTime": {
+        "en": "10 min read",
+        "zh": "10 分钟阅读"
+      },
+      "file": "riscv-cpu.md"
+    },
+    {
+      "id": 4,
+      "title": {
+        "en": "My Journey in Computer Science",
+        "zh": "我的计算机科学之旅"
+      },
+      "date": "2025-11-28",
+      "excerpt": {
+        "en": "Reflections on my academic journey and the lessons learned along the way.",
+        "zh": "回顾我的学术之旅以及一路走来学到的经验教训。"
+      },
+      "category": {
+        "en": "Personal",
+        "zh": "个人感悟"
+      },
+      "readTime": {
+        "en": "6 min read",
+        "zh": "6 分钟阅读"
+      },
+      "file": "cs-journey.md"
+    },
+    {
+      "id": 5,
+      "title": {
+        "en": "Guide to Making Baozi (Chinese Steamed Buns)",
+        "zh": "包包子指南：从零开始的家常美味"
+      },
+      "date": "2025-12-30",
+      "excerpt": {
+        "en": "A comprehensive guide to making delicious Chinese steamed buns from scratch, with step-by-step instructions and tips.",
+        "zh": "从零开始制作美味包子的全面指南，包含详细步骤和技巧。"
+      },
+      "category": {
+        "en": "Food & Cooking",
+        "zh": "美食烹饪"
+      },
+      "readTime": {
+        "en": "12 min read",
+        "zh": "12 分钟阅读"
+      },
+      "file": "baozi-guide.md"
+    },
+    {
+      "id": 6,
+      "title": {
+        "en": "Operating System Review",
+        "zh": "操作系统期末复习"
+      },
+      "date": "2026-1-11",
+      "excerpt": {
+        "en": "Feeling panic about OS final exam? Don't worry, this blog may help you!",
+        "zh": "你是否对操作系统期末考试感到焦虑？ 没关系，乔哥的博客会帮你"
+      },
+      "category": {
+        "en": "System & Architecture",
+        "zh": "计算机系统和架构"
+      },
+      "readTime": {
+        "en": "30 min read",
+        "zh": "30 分钟阅读"
+      },
+      "file": "operating_system_review.md"
+    }
+  ]
+}

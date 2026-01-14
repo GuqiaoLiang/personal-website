@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../data/translations'
-import { cpuImage, buildYourOwnWorldImage, threeDModelImage, spreadsheetAgentImage } from '../assets/images'
 
 const Projects = () => {
   const { language } = useLanguage()
   const t = translations[language]
   const [showUnderConstruction, setShowUnderConstruction] = useState(false)
+  const [projectsContent, setProjectsContent] = useState(null)
 
   const handleUnderConstruction = (e) => {
     e.preventDefault()
@@ -14,44 +14,41 @@ const Projects = () => {
     setTimeout(() => setShowUnderConstruction(false), 3000)
   }
 
-  const projects = [
-    {
-      title: language === 'en' ? 'LLM-based Spreadsheet Processing Agent' : '基于LLM的电子表格处理代理',
-      description: language === 'en' ? 'Research project exploring the application of Large Language Models in spreadsheet handling and data processing.' : '研究项目，探索大型语言模型在电子表格处理和数据应用中的应用。',
-      technologies: ['LLM', 'Research', 'Python', 'Data Analysis'],
-      image: spreadsheetAgentImage,
-      github: 'https://github.com/GuqiaoLiang',
-      demo: '#',
-      featured: true
-    },
-    {
-      title: language === 'en' ? 'Build Your Own World - 2D Maze Game' : '构建你自己的世界 - 2D迷宫游戏',
-      description: language === 'en' ? 'Java-based 2D maze game with saving/loading functionality and A* algorithm pathfinding implementation.' : '基于Java的2D迷宫游戏，具有保存/加载功能和A*算法路径查找实现。',
-      technologies: ['Java', 'A* Algorithm', 'Game Development', 'Software Engineering'],
-      image: buildYourOwnWorldImage,
-      github: 'https://github.com/GuqiaoLiang',
-      demo: '#',
-      featured: true
-    },
-    {
-      title: language === 'en' ? 'RISC-V CPU Design' : 'RISC-V CPU设计',
-      description: language === 'en' ? '2-stage pipelined CPU implementation using Logisim hardware simulator with smart branch prediction.' : '使用Logisim硬件模拟器实现的2级流水线CPU，具有智能分支预测功能。',
-      technologies: ['RISC-V', 'Logisim', 'CPU Architecture', 'Hardware Design'],
-      image: cpuImage,
-      github: 'https://github.com/GuqiaoLiang',
-      demo: '#',
-      featured: false
-    },
-    {
-      title: language === 'en' ? 'AI Techniques in 3D Model Generation' : '3D模型生成中的AI技术',
-      description: language === 'en' ? 'Exploration of 3D generative models and creation of animated character simulation using Mixamao and Unity.' : '探索3D生成模型，并使用Mixamao和Unity创建动画角色模拟。',
-      technologies: ['3D Modeling', 'AI', 'Unity', 'Computer Graphics'],
-      image: threeDModelImage,
-      github: 'https://github.com/GuqiaoLiang',
-      demo: '#',
-      featured: false
+  useEffect(() => {
+    let cancelled = false
+
+    const loadContent = async () => {
+      try {
+        const response = await fetch('/content/site.json')
+        if (!response.ok) {
+          throw new Error('Failed to load site content')
+        }
+        const data = await response.json()
+        if (!cancelled) {
+          setProjectsContent(data?.projectsPage ?? null)
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setProjectsContent(null)
+        }
+      }
     }
-  ]
+
+    loadContent()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const getLocalizedText = (value) => {
+    if (!value) {
+      return ''
+    }
+    return value[language] || value.en || value.zh || ''
+  }
+
+  const projects = projectsContent?.projects ?? []
 
   return (
     <div className="section-padding">
@@ -73,7 +70,7 @@ const Projects = () => {
             {t.projects}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {language === 'en' ? 'Explore some of my technical projects and creative solutions' : '探索我的一些技术项目和创意解决方案'}
+            {getLocalizedText(projectsContent?.intro)}
           </p>
         </div>
 
@@ -85,28 +82,34 @@ const Projects = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {projects
               .filter(project => project.featured)
-              .map((project, index) => (
-                <div
-                  key={index}
+              .map((project) => {
+                const title = getLocalizedText(project.title)
+                const description = getLocalizedText(project.description)
+                const demoLink = project.demo || '#'
+                const demoIsPlaceholder = demoLink === '#'
+
+                return (
+                  <div
+                    key={project.id || title}
                   className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
                   <div className="h-48 bg-gradient-to-br from-british-green to-royal-blue flex items-center justify-center overflow-hidden">
                     <img
                       src={project.image}
-                      alt={project.title}
+                      alt={title}
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         e.target.style.display = 'none'
-                        e.target.parentElement.innerHTML = `<div class="text-white text-4xl font-bold">${project.title.charAt(0)}</div>`
+                        e.target.parentElement.innerHTML = `<div class="text-white text-4xl font-bold">${title.charAt(0)}</div>`
                       }}
                     />
                   </div>
                   <div className="p-8">
                     <h3 className="text-2xl font-bold text-dark-gray mb-3">
-                      {project.title}
+                      {title}
                     </h3>
                     <p className="text-gray-600 mb-6 leading-relaxed">
-                      {project.description}
+                      {description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.technologies.map((tech, techIndex) => (
@@ -131,8 +134,10 @@ const Projects = () => {
                         {t.viewOnGitHub}
                       </a>
                       <a
-                        href="#"
-                        onClick={handleUnderConstruction}
+                        href={demoLink}
+                        onClick={demoIsPlaceholder ? handleUnderConstruction : undefined}
+                        target={demoIsPlaceholder ? undefined : '_blank'}
+                        rel={demoIsPlaceholder ? undefined : 'noopener noreferrer'}
                         className="flex items-center text-gray-700 hover:text-royal-blue transition-colors"
                       >
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,7 +148,8 @@ const Projects = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+                )
+              })}
           </div>
         </section>
 
@@ -153,28 +159,34 @@ const Projects = () => {
             {t.allProjects}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
-              <div
-                key={index}
+            {projects.map((project) => {
+              const title = getLocalizedText(project.title)
+              const description = getLocalizedText(project.description)
+              const demoLink = project.demo || '#'
+              const demoIsPlaceholder = demoLink === '#'
+
+              return (
+                <div
+                  key={project.id || title}
                 className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="h-32 bg-gradient-to-br from-british-green/20 to-royal-blue/20 flex items-center justify-center overflow-hidden">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.style.display = 'none'
-                      e.target.parentElement.innerHTML = `<div class="text-british-green text-2xl font-bold">${project.title.charAt(0)}</div>`
+                      e.target.parentElement.innerHTML = `<div class="text-british-green text-2xl font-bold">${title.charAt(0)}</div>`
                     }}
                   />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-dark-gray mb-2">
-                    {project.title}
+                    {title}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {project.description}
+                    {description}
                   </p>
                   <div className="flex flex-wrap gap-1 mb-4">
                     {project.technologies.slice(0, 3).map((tech, techIndex) => (
@@ -201,8 +213,10 @@ const Projects = () => {
                       {t.viewOnGitHub}
                     </a>
                     <a
-                      href="#"
-                      onClick={handleUnderConstruction}
+                      href={demoLink}
+                      onClick={demoIsPlaceholder ? handleUnderConstruction : undefined}
+                      target={demoIsPlaceholder ? undefined : '_blank'}
+                      rel={demoIsPlaceholder ? undefined : 'noopener noreferrer'}
                       className="text-gray-600 hover:text-royal-blue transition-colors text-sm"
                     >
                       {t.liveDemo}
@@ -210,18 +224,19 @@ const Projects = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 
         {/* Call to Action */}
         <div className="text-center mt-16">
           <div className="bg-gradient-to-r from-british-green to-royal-blue rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">
-              {language === 'en' ? 'Want to collaborate on a project?' : '想要合作项目吗？'}
+                    <h3 className="text-2xl font-bold mb-4">
+              {getLocalizedText(projectsContent?.cta?.title)}
             </h3>
             <p className="mb-6 text-blue-100">
-              {language === 'en' ? "If you have an interesting project idea, I'd love to work with you!" : '如果您有有趣的项目想法，我很乐意与您合作！'}
+              {getLocalizedText(projectsContent?.cta?.body)}
             </p>
             <a
               href="/contact"
